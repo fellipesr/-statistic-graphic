@@ -14,6 +14,8 @@ import ChartSh from "../src/components/ChartSh";
 function App() {
 
   const [sharehds, setDevs] = useState([]);
+  const [sharehdss, setSharehd] = useState([]);
+
 
   useEffect(() => {
     async function loadDevs() {
@@ -23,13 +25,30 @@ function App() {
 
     }
 
+    getSharehd();
     loadDevs();
   }, []);
+
+  async function getSharehd() {
+
+    let response = await api.get('/sharehd');
+    let shareHoldersNames = response.data;
+    let shareHoldersParticipation = response.data;
+    let shareHoldersData = [['Name', 'Percentage']];
+    for (let i = 0; i < shareHoldersNames.length; i += 1) {
+      shareHoldersData.push([shareHoldersNames[i].first_name, shareHoldersParticipation[i].participation])
+    }
+
+    //console.log(shareHoldersData);
+    setSharehd(shareHoldersData);
+
+  }
 
   async function handleAddDev(data) {
     const response = await api.post('/sharehd', data)
 
     setDevs([...sharehds, response.data]);
+    getSharehd();
   }
 
   return (
@@ -63,7 +82,7 @@ function App() {
           </Col>
           <Col>
             <div id="chart">
-              <ChartSh />
+              <ChartSh sharehdss={sharehdss} />
             </div>
           </Col>
         </Row>
