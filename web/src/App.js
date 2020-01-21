@@ -13,23 +13,23 @@ import ChartSh from "../src/components/ChartSh";
 
 function App() {
 
-  const [sharehds, setDevs] = useState([]);
-  const [sharehdss, setSharehd] = useState([]);
+  const [sharehds, setShareHolders] = useState([]);
+  const [graphic, setGraphic] = useState([]);
 
 
   useEffect(() => {
-    async function loadDevs() {
+    async function loadShareHolders() {
       const response = await api.get('/sharehd');
 
-      setDevs(response.data);
+      setShareHolders(response.data);
 
     }
 
-    getSharehd();
-    loadDevs();
+    getGraphic();
+    loadShareHolders();
   }, []);
 
-  async function getSharehd() {
+  async function getGraphic() {
 
     let response = await api.get('/sharehd');
     let shareHoldersNames = response.data;
@@ -40,22 +40,22 @@ function App() {
     }
 
     //console.log(shareHoldersData);
-    setSharehd(shareHoldersData);
+    setGraphic(shareHoldersData);
 
   }
 
-  async function handleAddDev(data) {
+  async function addShareHolders(data) {
     const response = await api.post('/sharehd', data)
 
-    setDevs([...sharehds, response.data]);
-    getSharehd();
+    setShareHolders([...sharehds, response.data]);
+    getGraphic();
   }
 
   return (
     <div id="app">
       <div >
         <aside>
-          <Form onSubmit={handleAddDev} />
+          <Form onSubmit={addShareHolders} />
         </aside>
       </div>
       <Container>
@@ -82,7 +82,7 @@ function App() {
           </Col>
           <Col>
             <div id="chart">
-              <ChartSh sharehdss={sharehdss} />
+              <ChartSh graphic={graphic} />
             </div>
           </Col>
         </Row>

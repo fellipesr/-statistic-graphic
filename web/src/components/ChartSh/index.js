@@ -4,11 +4,11 @@ import LoadingSpin from 'react-loading-spin';
 
 import './styles.css';
 
-function ChartSh({ sharehdss }) {
+function ChartSh({ graphic }) {
 
   return (
     <div >
-      {(sharehdss == false) ? (
+      {(graphic == false) ? (
         <div id="loadingSpin">
           <LoadingSpin
             primaryColor='blue'
@@ -20,7 +20,7 @@ function ChartSh({ sharehdss }) {
               width={'100%'}
               height={'300px'}
               chartType="PieChart"
-              data={sharehdss}
+              data={graphic}
               options={{
                 title: 'Dados das Participações',
               }}
